@@ -6,6 +6,7 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
+  <!-- 接收或返回数据时，统一字符集编码，防止乱码-->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -33,7 +34,7 @@
   <url-pattern>*.do</url-pattern>
   </filter-mapping>
 
-  <!-- SpringSession -->
+  <!-- SpringSession的filter -->
   <!--<filter>-->
     <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
     <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
@@ -43,10 +44,12 @@
     <!--<url-pattern>*.do</url-pattern>-->
   <!--</filter-mapping>-->
 
+  <!-- 注册Spring的request作用域 -->
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
 
+  <!--修改applicationContext.xml配置文件的位置-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -57,6 +60,7 @@
     </param-value>
   </context-param>
 
+  <!--DispatcherServlet配置-->
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

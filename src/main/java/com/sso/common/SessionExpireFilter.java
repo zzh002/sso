@@ -4,6 +4,7 @@ package com.sso.common;
 import com.sso.pojo.User;
 import com.sso.util.CookieUtil;
 import com.sso.util.JsonUtil;
+import com.sso.util.RedisPoolUtil;
 import com.sso.util.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,11 +32,15 @@ public class SessionExpireFilter implements Filter {
             //判断logintoken是否为空或者""；
             //如果不为空的话，符合条件，继续拿user信息
 
-            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
+            String userJsonStr = RedisPoolUtil.get(loginToken);
+
+//            String userJsonStr = RedisShardedPoolUtil.get(loginToken);
             User user = JsonUtil.string2Obj(userJsonStr,User.class);
             if(user != null){
                 //如果user不为空，则重置session的时间，即调用expire命令
-                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                RedisPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+
+//                RedisShardedPoolUtil.expire(loginToken, Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
             }
         }
         filterChain.doFilter(servletRequest,servletResponse);
